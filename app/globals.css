@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #FFF8E7;
+    color: #0F0F14;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Cartoon-premium scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #F5EFE0; }
+  ::-webkit-scrollbar-thumb { background: #0F0F14; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+  /* Tabular numbers for stats */
+  .stat { font-variant-numeric: tabular-nums; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .cartoon-shadow {
+    box-shadow: 4px 4px 0 0 #0F0F14;
+  }
+  .cartoon-shadow-sm {
+    box-shadow: 3px 3px 0 0 #0F0F14;
+  }
+  .cartoon-shadow-xs {
+    box-shadow: 2px 2px 0 0 #0F0F14;
+  }
+  .cartoon-shadow-pressed {
+    box-shadow: 1px 1px 0 0 #0F0F14;
+  }
+  .cartoon-border {
+    border: 2px solid #0F0F14;
+  }
+  .cartoon-border-3 {
+    border: 3px solid #0F0F14;
+  }
+}

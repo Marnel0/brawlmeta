@@ -1,0 +1,24 @@
+name: Aggregate Battle Stats
+
+on:
+  schedule:
+    # Every hour at :05 past (gives Vercel ISR time to settle after deploy)
+    - cron: "5 * * * *"
+  workflow_dispatch: # allow manual trigger from the GitHub UI
+
+jobs:
+  aggregate:
+    name: Trigger /api/cron/aggregate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call cron endpoint
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ secrets.NEXT_PUBLIC_APP_URL }}/api/cron/aggregate")
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Cron endpoint returned $STATUS" >&2
+            exit 1
+          fi
