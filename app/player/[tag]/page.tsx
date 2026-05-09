@@ -40,7 +40,7 @@ export default async function PlayerProfilePage({
       </div>
 
       {/* Hero — avatar, name, trophies, win rate */}
-      <PlayerHero player={player} battles={battles} />
+      <PlayerHero player={player} battles={battles} cachedAt={data.cachedAt} />
 
       {/* Battle log */}
       <section className="mt-10">

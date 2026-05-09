@@ -18,9 +18,11 @@ function StatPill({ label, value }: { label: string; value: string }) {
 export function PlayerHero({
   player,
   battles,
+  cachedAt,
 }: {
   player: PlayerProfile;
   battles: BattleLogEntry[];
+  cachedAt?: string;
 }) {
   const nameColor = nameColorToCss(player.nameColor);
   const iconUrl = `https://cdn.brawlify.com/profile-icons/regular/${player.icon.id}.png`;
@@ -70,7 +72,12 @@ export function PlayerHero({
             </h1>
             <p className="text-brand-ink/40 font-mono text-sm mb-3">{player.tag}</p>
             <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-              {player.club?.name && (
+              {cachedAt && (
+              <span className="bg-brand-cream border-2 border-brand-ink/20 rounded-xl px-3 py-1 text-xs font-heading text-brand-ink/40 shadow-cartoon-sm">
+                🕐 Updated {new Date(cachedAt).toLocaleDateString()}
+              </span>
+            )}
+            {player.club?.name && (
                 <span className="bg-brand-cream border-2 border-brand-ink rounded-xl px-3 py-1 text-sm font-heading font-semibold text-brand-ink/70 shadow-cartoon-sm">
                   🏰 {player.club.name}
                 </span>
