@@ -93,6 +93,60 @@ export interface SupercellEventItem {
   };
 }
 
+// ── Player profile ────────────────────────────────────────────────────────────
+
+export interface PlayerBrawlerGear { id: number; name: string; level: number }
+export interface PlayerBrawlerItem { id: number; name: string }
+
+export interface PlayerBrawler {
+  id: number;
+  name: string;
+  power: number;
+  rank: number;
+  trophies: number;
+  highestTrophies: number;
+  gears: PlayerBrawlerGear[];
+  starPowers: PlayerBrawlerItem[];
+  gadgets: PlayerBrawlerItem[];
+}
+
+export interface PlayerProfile {
+  tag: string;
+  name: string;
+  nameColor: string;
+  icon: { id: number };
+  trophies: number;
+  highestTrophies: number;
+  expLevel: number;
+  expPoints: number;
+  "3vs3Victories": number;
+  soloVictories: number;
+  duoVictories: number;
+  club?: { tag: string; name: string };
+  brawlers: PlayerBrawler[];
+}
+
+export interface BattleParticipant {
+  tag: string;
+  name: string;
+  brawler: { id: number; name: string; power: number; trophies: number };
+}
+
+export interface BattleLogEntry {
+  battleTime: string;
+  event: { id: number; mode: string; map: string };
+  battle: {
+    mode: string;
+    type: string;
+    result?: "victory" | "defeat" | "draw";
+    duration?: number;
+    trophyChange?: number;
+    starPlayer?: BattleParticipant;
+    teams?: BattleParticipant[][];
+    players?: (BattleParticipant & { rank?: number })[];
+  };
+}
+
 // ── Vercel KV stats accumulation (Option C) ───────────────────────────────────
 
 /** Per-brawler win/loss/pick counters — compact keys to save KV bytes */
