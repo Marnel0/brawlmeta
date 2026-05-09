@@ -15,9 +15,13 @@ const MIN_BATTLES = 100; // minimum totalBattles before we trust the store
 
 export async function readStore(): Promise<StatsStore | null> {
   try {
-    const raw = await kv.get<StatsStore>(KV_KEY);
-    if (!raw || raw.v !== SCHEMA_VERSION || raw.totalBattles < MIN_BATTLES) return null;
-    return raw;
+    let raw = await kv.get<StatsStore | string>(KV_KEY);
+    // Local script stores a double-encoded string — unwrap it
+    if (typeof raw === "string") {
+      try { raw = JSON.parse(raw) as StatsStore; } catch { return null; }
+    }
+    if (!raw || (raw as StatsStore).v !== SCHEMA_VERSION || (raw as StatsStore).totalBattles < MIN_BATTLES) return null;
+    return raw as StatsStore;
   } catch {
     return null;
   }
