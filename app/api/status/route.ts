@@ -11,6 +11,10 @@ export async function GET() {
 
   try {
     rawKv = await kv.get("brawl:stats");
+    // Unwrap double-encoded string (written by local script)
+    if (typeof rawKv === "string") {
+      try { rawKv = JSON.parse(rawKv); } catch { /* leave as-is */ }
+    }
   } catch (e) {
     kvError = (e as Error).message;
   }
